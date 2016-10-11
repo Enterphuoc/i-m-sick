@@ -125,10 +125,12 @@ public class BouncingBall extends JFrame {
 			g.fillOval(mouseX-10, mouseY-10, 20, 20);
 			
 			//Left Paddle
-			g.setColor(Color.BLACK);
+			g.setColor(Color.GREEN);
+			
 			int leftPaddleX = 0;
 			g.fillRect(leftPaddleX, leftPaddleY, paddleWidth, leftPaddleHeight);
 			//Right Paddle
+			g.setColor(Color.GREEN);
 			int rightPaddleX = getWidth()-paddleWidth;
 			g.fillRect(rightPaddleX, rightPaddleY, paddleWidth, rightPaddleHeight);
 			
