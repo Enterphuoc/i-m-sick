@@ -3,8 +3,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
@@ -41,7 +39,8 @@ public class BouncingBall extends JFrame {
 	int rightPaddleHeight = 100;
 	//Mouse
 	int mouseX = 0, mouseY =0;
-	
+	//counter
+	int counterL =0 , right=0,countU=0,countD=0,counter=0;
 	/**
 	 * Constructor
 	 */
@@ -62,24 +61,7 @@ public class BouncingBall extends JFrame {
 				mouseY = e.getY();
 			}
 		});
-		this.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed (KeyEvent e) {
-				if(e.getKeyCode()== KeyEvent.VK_UP){
-					rightPaddleY -=10;
-				}
-				if(e.getKeyCode()== KeyEvent.VK_DOWN){
-					rightPaddleY +=10;
-				}
-				if(e.getKeyCode()== KeyEvent.VK_W){
-					leftPaddleY -=10;
-				}
-				if(e.getKeyCode()== KeyEvent.VK_S){
-					leftPaddleY +=10;
-				}
-			} 
-			
-		});
+	
 
 		ActionListener updateTask = new ActionListener() {
 
@@ -88,19 +70,35 @@ public class BouncingBall extends JFrame {
 				//Update ball position
 				x += xSpeed;
 				y += ySpeed;
+
+                                                        
 				//Reverse the direction of the ball if it hits the left or right wall
 				if (x < 0 || x > WIDTH - size) {
 					xSpeed = -xSpeed;
 					changeBallColor();
+					if(x<0){
+					counterL++;}
 				}
+				    if (x>WIDTH - size){
+				    	
+				    	right++;
+				    }
+				  
 				//Reverse the direction of the ball if it hits the top or bottom wall
 				if (y < 0 || y > HEIGHT - size) {
 					ySpeed = -ySpeed;
 					changeBallColor();
+					if(y<0){
+						countU++;
+					}
+					if (y>HEIGHT -size){
+						countD++;
+					}
+					
 				}
 				//Set fixed paddles position
-				//leftPaddleY = (getHeight()-40)/2 - leftPaddleHeight/2;
-				//rightPaddleY = (getHeight()-40)/2 - rightPaddleHeight/2;
+				leftPaddleY = (getHeight()-40)/2 - leftPaddleHeight/2;
+				rightPaddleY = (getHeight()-40)/2 - rightPaddleHeight/2;
 				repaint();
 			}
 		};
@@ -153,6 +151,9 @@ public class BouncingBall extends JFrame {
 			g.setColor(Color.GREEN);
 			int rightPaddleX = getWidth()-paddleWidth;
 			g.fillRect(rightPaddleX, rightPaddleY, paddleWidth, rightPaddleHeight);
+			//
+			counter=counterL+right+countD+countU;
+			g.drawString (""+counter,20,20);
 			
 			//Debug
 			long duration = System.nanoTime() - start;
